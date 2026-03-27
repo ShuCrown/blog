@@ -1,11 +1,39 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import HomeHeader from '../components/HomeHeader.astro';
+import Card from '../components/Card.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const title = 'Blog';
+const description = 'A personal blog powered by Astro';
 ---
 
-<Layout>
-	<Welcome />
+<Layout title={title} description={description}>
+  <article class="max-w-6xl mx-auto px-3">
+    <HomeHeader title={title} description={description} />
+
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-8">
+      <div class="col-span-1">
+        <Card post={{
+          url: '/posts/hello-world',
+          frontmatter: {
+            title: 'Welcome to My Blog',
+            pubDate: new Date(),
+            hero: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80'
+          }
+        }} />
+      </div>
+    </section>
+  </article>
+
+  <section class="flex space-x-8 justify-center text-xl pt-8 font-bold">
+    <a href="/posts">
+      See All<span class="squiggle">&rarr;</span>
+    </a>
+  </section>
 </Layout>
+
+<style>
+  .squiggle {
+    filter: url("#squiggle");
+  }
+</style>

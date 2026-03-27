@@ -1,0 +1,14 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+
+<header class="mx-auto max-w-xl text-center py-12 lg:py-20">
+  <h1 class="mb-4 text-5xl lg:text-7xl font-black uppercase" style="font-family: 'Londrina Solid', sans-serif; line-height: 1;">
+    {title}
+  </h1>
+  <p class="text-lg text-gray-600">{description}</p>
+</header>
