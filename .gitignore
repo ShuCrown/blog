@@ -25,5 +25,9 @@ pnpm-debug.log*
 .vscode
 .history
 
-# ai 
+# ai
 CLAUDE.md
+
+# Cloudflare
+.wrangler
+.dev.vars
