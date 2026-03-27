@@ -31,8 +31,11 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: List dist contents
+        run: ls -la dist/
+
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          token: ${{ secrets.GITHUB_TOKEN }}
+          folder: dist
