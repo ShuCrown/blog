@@ -1,118 +1,65 @@
-# Astro Starter Kit: Basics
+# Blog
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+一个使用 **Astro 6** 构建的个人博客项目，采用 **Vibe Coding** 方式，通过 **Claude Code** AI 助手协助开发，部署在 **Cloudflare Pages**。
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Tech Stack
 
-## 🚀 Project Structure
+- **Framework**: Astro 6.x
+- **Styling**: Tailwind CSS v4
+- **Hosting**: Cloudflare Pages
+- **AI Assistant**: Claude Code (via Anthropic)
 
-Inside of your Astro project, you'll see the following folders and files:
+## 开发方式
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+本项目采用 Vibe Coding 理念 - 以 AI 助手为核心，通过自然语言对话驱动开发。
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+```bash
+# 启动开发服务器
+pnpm dev
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`            | Installs dependencies                            |
-| `pnpm dev`                | Starts local dev server at `localhost:4321`      |
-| `pnpm build`              | Build your production site to `./dist/`          |
-| `pnpm preview`            | Preview your build locally, before deploying     |
-| `pnpm deploy`             | Read `.env`, build, and deploy locally with Wrangler CLI |
-| `pnpm astro ...`          | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help`    | Get help using the Astro CLI                     |
-
-## Deploy to Cloudflare Pages
-
-This project supports both local Wrangler CLI deployment and GitHub Actions deployment.
-
-### Local deployment with `.env`
-
-1. Install dependencies:
-
-```sh
-pnpm install
-```
-
-2. Log in to Cloudflare locally once:
-
-```sh
-pnpm exec wrangler login
-```
-
-3. If the Pages project does not exist yet, create it once:
-
-```sh
-pnpm exec wrangler pages project create blog --production-branch main
-```
-
-4. Create your local env file:
-
-```sh
-cp .env.example .env
-```
-
-5. Edit `.env` and set the actual Pages project name:
-
-```sh
-CLOUDFLARE_PAGES_PROJECT_NAME=blog
-```
-
-6. Deploy:
-
-```sh
-pnpm deploy
-```
-
-The deploy script reads `.env` first, and falls back to your current shell environment if needed.
-
-Equivalent manual command:
-
-```sh
+# 构建生产版本
 pnpm build
-pnpm exec wrangler pages deploy dist --project-name=$CLOUDFLARE_PAGES_PROJECT_NAME
+
+# 预览构建结果
+pnpm preview
 ```
 
-### GitHub Actions deployment
+## 部署
 
-Workflow file: `.github/workflows/deploy.yml`
+### GitHub Actions
 
-Add these repository settings in GitHub:
+推送到 `main` 分支自动部署到 Cloudflare Pages。
 
-- Secret: `CLOUDFLARE_API_TOKEN`
-- Secret: `CLOUDFLARE_ACCOUNT_ID`
-- Variable: `CLOUDFLARE_PAGES_PROJECT_NAME`
+需要配置以下 GitHub Secrets:
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+- `CLOUDFLARE_PAGES_PROJECT_NAME` (设置为 `blog`)
 
-`CLOUDFLARE_PAGES_PROJECT_NAME` must exactly match an existing Cloudflare Pages project name in the same account.
+### 本地部署
 
-After the secrets and variable are set, every push to `main` will:
+```bash
+pnpm build
+pnpm exec wrangler pages deploy dist --project-name=blog
+```
 
-- install dependencies
-- build the Astro site into `dist`
-- deploy `dist` to Cloudflare Pages
+## 项目结构
 
-If you get `Project not found`, the configured project name does not match an existing Cloudflare Pages project in your account.
+```
+src/
+├── components/     # Astro 组件
+├── content/        # 博客文章 (Markdown)
+├── layouts/        # 页面布局
+└── pages/          # 路由页面
+    ├── index.astro         # 首页
+    ├── posts/             # 文章详情
+    │   ├── index.astro    # 全部文章列表
+    │   └── [...slug].astro # 动态路由
+    └── search.astro       # 搜索页面
+```
 
-## 👀 Want to learn more?
+## 功能特性
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- 响应式设计，支持移动端和桌面端
+- 全文搜索弹窗 (Raycast 风格)
+- 按日期排序的文章列表
+- 深色边框导航栏
