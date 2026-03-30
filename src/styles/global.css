@@ -4,6 +4,8 @@
 @theme {
   --font-display: 'Londrina Solid', sans-serif;
   --font-body: 'Poppins', sans-serif;
+  --color-code-bg: #1e1e2e;
+  --color-code-border: #313244;
 }
 
 /* Base styles */
@@ -112,13 +114,15 @@ body {
 }
 
 .content code {
-  color: #fff;
-  font-size: 0.875rem;
-  padding: 0.125rem;
-  line-height: 1;
+  color: #f38ba8;
+  font-size: 0.875em;
+  padding: 0.2em 0.4em;
+  line-height: 1.5;
   white-space: nowrap;
-  font-family: ui-monospace, monospace;
-  background: #2d2d2d;
+  font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+  background: var(--color-code-bg);
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-code-border);
 }
 
 .content pre {
@@ -129,11 +133,30 @@ body {
   margin-bottom: 2rem;
   border-radius: 0.75rem;
   overflow: hidden;
+  background: var(--color-code-bg);
+  border: 1px solid var(--color-code-border);
 }
 
 .content pre code {
-  padding: 0.5rem;
+  padding: 1rem 1.25rem;
+  color: #cdd6f4;
+  white-space: pre;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  width: 100%;
+  overflow-x: auto;
 }
+
+/* Syntax highlighting tokens */
+.content pre code .keyword { color: #cba6f7; }
+.content pre code .string { color: #a6e3a1; }
+.content pre code .number { color: #fab387; }
+.content pre code .comment { color: #6c7086; font-style: italic; }
+.content pre code .function { color: #89b4fa; }
+.content pre code .variable { color: #f38ba8; }
+.content pre code .operator { color: #89dceb; }
+.content pre code .punctuation { color: #9399b2; }
 
 .content table {
   width: 100%;
