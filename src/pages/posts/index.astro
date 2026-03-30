@@ -3,8 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import HomeHeader from '../../components/HomeHeader.astro';
 import { getCollection } from 'astro:content';
 
-const title = 'All Posts';
-const description = 'Browse all blog posts';
+const title = '全部文章';
+const description = '浏览所有文章';
 
 const allPosts = await getCollection('posts');
 const sortedPosts = allPosts.sort((a, b) =>
@@ -14,16 +14,17 @@ const sortedPosts = allPosts.sort((a, b) =>
 
 <Layout title={title} description={description}>
   <article class="max-w-4xl mx-auto px-3">
-    <HomeHeader title={title} description={description} />
+    <header class="pb-5 text-center">
+      <h1 class="text-4xl font-bold">{title}</h1>
+    </header>
 
-    <section class="py-8">
+    <section class="pb-12">
       <ul class="space-y-6">
         {sortedPosts.map((post) => {
-          const formattedDate = new Date(post.data.pubDate).toLocaleDateString('en-US', {
-            month: 'short',
-            day: '2-digit',
-            year: 'numeric'
-          });
+          const d = new Date(post.data.pubDate);
+          const dateStr = d.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
+          const timeStr = d.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          const formattedDate = `${dateStr} ${timeStr}`;
           return (
             <li class="border-b border-gray-200 pb-6 last:border-0 last:pb-0">
               <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="group block">

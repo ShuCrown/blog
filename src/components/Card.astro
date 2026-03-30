@@ -4,16 +4,15 @@ export interface Props {
 }
 
 const { post } = Astro.props;
-const formattedDate = new Date(post.frontmatter.pubDate).toLocaleDateString('en-US', {
-  month: '2-digit',
-  day: '2-digit',
-  year: 'numeric'
-});
+const d = new Date(post.frontmatter.pubDate);
+const dateStr = d.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
+const timeStr = d.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+const formattedDate = `${dateStr} ${timeStr}`;
 ---
 
 <a
   href={post.url}
-  class="transition-all duration-75 ease-in-out h-full block relative top-0 hover:-top-2 shadow-lg hover:shadow-xl bg-white rounded-xl overflow-hidden squiggle"
+  class="transition-all duration-75 ease-in-out h-full block relative top-0 hover:-top-2 shadow-lg hover:shadow-xl bg-white rounded-xl overflow-hidden"
 >
   {post.frontmatter.hero && (
     <img
@@ -33,9 +32,3 @@ const formattedDate = new Date(post.frontmatter.pubDate).toLocaleDateString('en-
     </p>
   </div>
 </a>
-
-<style>
-  .squiggle {
-    filter: url("#squiggle");
-  }
-</style>

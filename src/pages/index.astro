@@ -16,9 +16,11 @@ const recentPosts = sortedPosts.slice(0, 3);
 
 <Layout title={title} description={description}>
   <article class="max-w-6xl mx-auto px-3">
-    <HomeHeader title={title} description={description} />
+    <header class="py-10 text-center">
+      <h1 class="text-4xl font-bold">近期发布</h1>
+    </header>
 
-    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-8">
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12">
       {recentPosts.map((post) => (
         <div class="col-span-1">
           <Card post={{
@@ -32,7 +34,7 @@ const recentPosts = sortedPosts.slice(0, 3);
 
   <section class="flex space-x-8 justify-center text-xl pt-8 font-bold">
     <a href="/posts">
-      See All<span class="squiggle">&rarr;</span>
+      查看全部<span class="squiggle">&rarr;</span>
     </a>
   </section>
 </Layout>
