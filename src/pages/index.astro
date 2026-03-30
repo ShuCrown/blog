@@ -2,9 +2,16 @@
 import Layout from '../layouts/Layout.astro';
 import HomeHeader from '../components/HomeHeader.astro';
 import Card from '../components/Card.astro';
+import { getCollection } from 'astro:content';
 
 const title = 'Blog';
 const description = 'A personal blog powered by Astro';
+
+const allPosts = await getCollection('posts');
+const sortedPosts = allPosts.sort((a, b) =>
+  new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+const recentPosts = sortedPosts.slice(0, 3);
 ---
 
 <Layout title={title} description={description}>
@@ -12,16 +19,14 @@ const description = 'A personal blog powered by Astro';
     <HomeHeader title={title} description={description} />
 
     <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-8">
-      <div class="col-span-1">
-        <Card post={{
-          url: '/posts/hello-world',
-          frontmatter: {
-            title: 'Welcome to My Blog',
-            pubDate: new Date(),
-            hero: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80'
-          }
-        }} />
-      </div>
+      {recentPosts.map((post) => (
+        <div class="col-span-1">
+          <Card post={{
+            url: `/posts/${post.id.replace(/\.md$/, '')}`,
+            frontmatter: post.data
+          }} />
+        </div>
+      ))}
     </section>
   </article>
 

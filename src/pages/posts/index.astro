@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HomeHeader from '../../components/HomeHeader.astro';
+import { getCollection } from 'astro:content';
+
+const title = 'All Posts';
+const description = 'Browse all blog posts';
+
+const allPosts = await getCollection('posts');
+const sortedPosts = allPosts.sort((a, b) =>
+  new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+---
+
+<Layout title={title} description={description}>
+  <article class="max-w-4xl mx-auto px-3">
+    <HomeHeader title={title} description={description} />
+
+    <section class="py-8">
+      <ul class="space-y-6">
+        {sortedPosts.map((post) => {
+          const formattedDate = new Date(post.data.pubDate).toLocaleDateString('en-US', {
+            month: 'short',
+            day: '2-digit',
+            year: 'numeric'
+          });
+          return (
+            <li class="border-b border-gray-200 pb-6 last:border-0 last:pb-0">
+              <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="group block">
+                <div class="flex items-baseline justify-between gap-4">
+                  <h2 class="font-bold text-xl group-hover:text-blue-600 transition-colors">
+                    {post.data.title}
+                  </h2>
+                  <span class="text-sm text-gray-500 shrink-0">
+                    {formattedDate}
+                  </span>
+                </div>
+                {post.data.description && (
+                  <p class="text-gray-600 mt-2">{post.data.description}</p>
+                )}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  </article>
+</Layout>

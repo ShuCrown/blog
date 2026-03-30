@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/BlogPostLayout.astro
 title: "Hello World"
 description: "Welcome to my new blog powered by Astro"
 pubDate: 2026-03-27
